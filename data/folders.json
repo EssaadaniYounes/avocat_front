@@ -1,0 +1,292 @@
+{
+  "folders": [
+    {
+      "private_id": "1212/12",
+      "dateOpenFolder": "2021-12-23",
+      "clientName": 5,
+      "clientRef": "21",
+      "oponentName": "حميد مقبول",
+      "type": 9,
+      "files": [],
+      "assuranceID": "1212",
+      "recordNumber": 9,
+      "incidentDate": "2021-12-11",
+      "inssureName": "يونس السعداني",
+      "expertName": "خالد السعداني",
+      "court": 6,
+      "courtID": "123/2021",
+      "sessionDate": "2021-12-29",
+      "roomNumber": "438",
+      "folderEndDate": "2022-01-05",
+      "delebration": "ul",
+      "notes": "nsbshbdhbshdbh",
+      "id": 1
+    },
+    {
+      "idFolder": "12/122",
+      "dateOpenFolder": "1973-07-21",
+      "clientName": 5,
+      "clientRef": "Facilis sint aut qui",
+      "oponentName": "Marny Duffy",
+      "type": 4,
+      "files": [
+        {
+          "file_id": "200211",
+          "client_id": "محمد السعداني dsd",
+          "judgment_date": "2021-12-20",
+          "degree": "secondary",
+          "decider": "ياسر الطاهر",
+          "file_type_id": "mecanique"
+        },
+        {
+          "file_id": "200211",
+          "client_id": "محمد السعداني dsd",
+          "judgment_date": "2021-12-20",
+          "degree": "secondary",
+          "decider": "ياسر الطاهر",
+          "file_type_id": "mecanique"
+        }
+      ],
+      "assuranceID": "Exercitation volupta",
+      "recordNumber": 50,
+      "incidentDate": "1982-12-05",
+      "inssureName": "Rudyard Robles",
+      "expertName": "Noah Meyer",
+      "court": 1,
+      "courtID": "Quo consectetur vol",
+      "sessionDate": "1971-01-26",
+      "roomNumber": "257",
+      "folderEndDate": "2005-12-16",
+      "delebration": "test",
+      "notes": "Suscipit aut eum quo",
+      "id": 2
+    }
+  ],
+  "clients": [
+    {
+      "number": "12/201",
+      "name": "hamid mkb",
+      "address": "Bm",
+      "email": "axa@gmail.com",
+      "phone": "+212 6 36-17-37-00",
+      "id": 1
+    },
+    {
+      "number": "11/201",
+      "phone": "+212 6 36-17-37-00",
+      "name": "axas",
+      "address": "Bm",
+      "email": "axas@gmail.com",
+      "id": 3
+    },
+    {
+      "number": "22910/329",
+      "name": "Younes Essaadani",
+      "address": "fquih  ben salah ouled sidi chennane ouest rue 26 bloc 2 numero 17",
+      "email": "younesessaadani2003@gmail.com",
+      "phone": "0636173700",
+      "id": 4
+    },
+    {
+      "clientNumber": "22",
+      "name": "said",
+      "address": "",
+      "email": "younesessaadani2003@gmail.com",
+      "phone": "0636173700",
+      "id": 6
+    },
+    {
+      "clientNumber": "121",
+      "name": "charif",
+      "address": "يةةة",
+      "email": "younesessaadani2003@gmail.com",
+      "phone": "0636173700",
+      "id": 7
+    },
+    {
+      "clientNumber": "",
+      "name": "mstafa",
+      "address": "",
+      "email": "",
+      "phone": "",
+      "id": 8
+    },
+    {
+      "clientNumber": "",
+      "name": "testtetstts",
+      "adress": "",
+      "email": "",
+      "phone": "",
+      "id": 9
+    }
+  ],
+  "users": [
+    {
+      "user_email": "admin@gmail.com",
+      "user_name": "برامو",
+      "password": "1234",
+      "role_id": "1",
+      "phone": "+212 6 36-17-37-00",
+      "id": 1
+    },
+    {
+      "user_name": "محام",
+      "user_email": "avocat@gmail.com",
+      "password": "123",
+      "role_id": "2",
+      "phone": "+1 (712) 702-6839",
+      "id": 3
+    }
+  ],
+  "issues": [
+    {
+      "type": "حادثة",
+      "id": 1
+    },
+    {
+      "type": "قتل",
+      "id": 2
+    },
+    {
+      "type": "طلاق",
+      "id": 3
+    },
+    {
+      "type": "مدني عقاري",
+      "id": 4
+    },
+    {
+      "type": "جنايات",
+      "id": 5
+    },
+    {
+      "type": "سعيد ",
+      "id": 6
+    },
+    {
+      "type": "dncsncnncnc",
+      "id": 7
+    },
+    {
+      "type": "reetet",
+      "id": 8
+    },
+    {
+      "type": "مرور",
+      "id": 9
+    }
+  ],
+  "courts": [
+    {
+      "name": "طنجة الابتدائية",
+      "level": "1",
+      "id": 3
+    },
+    {
+      "name": "محكمة الفقيه بن صالح",
+      "level": "1",
+      "courtLevel": "",
+      "id": 6
+    },
+    {
+      "name": "بني ملال الاستئنافية",
+      "level": "2",
+      "id": 7
+    }
+  ],
+  "fees": [
+    {
+      "id": 1,
+      "fee_agreed_1": 10,
+      "fee_add_1": 11,
+      "fee_result_1": 2,
+      "fee_agreed_2": 3,
+      "fee_add_2": 6,
+      "fee_result_2": 100,
+      "fee_agreed_3": 23,
+      "fee_add_3": 3221,
+      "fee_result_3": 29,
+      "advance_fee": 23,
+      "rest_fee": 12,
+      "fee": 200,
+      "record_id": "test1",
+      "record": "test1",
+      "experience": "test1",
+      "transport": "test1",
+      "help": "test1",
+      "execution": "test1",
+      "outlay": "test1",
+      "translate": "test1",
+      "extra_outlay": "test1",
+      "other": "test1",
+      "sum": "test1",
+      "preemption": "test1",
+      "rest_": "test1",
+      "payment_date": "2000-10-10",
+      "expenses": "test1",
+      "notes": "test1"
+    },
+    {
+      "id": 2,
+      "fee_agreed_1": 0,
+      "fee_add_1": 0,
+      "fee_result_1": 0,
+      "fee_agreed_2": 0,
+      "fee_add_2": 0,
+      "fee_result_2": 0,
+      "fee_agreed_3": 0,
+      "fee_add_3": 0,
+      "fee_result_3": 0,
+      "advance_fee": 0,
+      "rest_fee": 0,
+      "fee": 0,
+      "record_id": "test2",
+      "record": "test2",
+      "experience": "test2",
+      "transport": "test2",
+      "help": "test2",
+      "execution": "test2",
+      "outlay": "test2",
+      "translate": "test2",
+      "extra_outlay": "test2",
+      "other": "test2",
+      "sum": "test2",
+      "preemption": "test2",
+      "rest_": "test2",
+      "payment_date": "2000-10-10",
+      "expenses": "test2",
+      "notes": "test2"
+    },
+    {
+      "fee_agreed_1": "212",
+      "fee_add_1": 21.200000000000003,
+      "fee_result_1": 233.2,
+      "fee_agreed_2": 0,
+      "fee_add_2": 0,
+      "fee_result_2": 0,
+      "fee_agreed_3": 0,
+      "fee_add_3": 0,
+      "fee_result_3": 0,
+      "fee_advanced_fee": 0,
+      "rest_fee": "-233.20",
+      "fee": "-233.20",
+      "record_id": "121",
+      "record": "absb",
+      "experience": "ds",
+      "transport": "",
+      "help": "",
+      "execution": "",
+      "outlay": "21020",
+      "translate": "",
+      "extra_outlay": "",
+      "other": "",
+      "sum": "",
+      "preemption": "",
+      "rest_": "",
+      "payment_date": "",
+      "expenses": "20029",
+      "notes": "test",
+      "id": 3
+    }
+  ]
+}
