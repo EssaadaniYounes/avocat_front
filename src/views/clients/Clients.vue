@@ -33,7 +33,7 @@
       :search="search"
     >
      <template v-slot:item="row">
-          <tr>
+          <tr v-if="row.item.id!=1">
             <td>{{row.item.number}}</td>
             <td>{{row.item.name}}</td>
             <td>{{row.item.phone}}</td>
@@ -45,7 +45,7 @@
                 </button>
                 <button data-bs-toggle="modal" class="btn btn-warning btn-sm"
                 data-bs-target="#modal_Edit"
-                @click="showData(row.item.id-1)"
+                @click="showData(row.item.id)"
                 ><i class="fas fa-edit"></i></button>
             </td>
           </tr>
@@ -195,15 +195,8 @@
 </template>
 
 <script>
-import axios from "axios";
-const serverName = "clients";
-
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
 import api from '../../mixin';
+
 export default {
   mixins:[api],
   data() {
@@ -214,7 +207,6 @@ export default {
       widgets: false,
       clients: [],
       key_pp: 1,
-      api_endpoint: new URL(serverName),
 
       client: {
         number: "",
@@ -225,23 +217,23 @@ export default {
         id: "",
       },
       
-        search: '',
-        headers: [
-          { text: 'رقم الموكل', value: 'number' },
-          { text: 'اسم الموكل', value: 'name' },
-          { text: 'الهاتف', value: 'phone' },
-          { text: 'العنوان', value: 'address' },
-          { text: 'الايميل', value: 'email' },
-          { text: '', value: '' },
-        ]
+      search: '',
+      headers: [
+        { text: 'رقم الموكل', value: 'number' },
+        { text: 'اسم الموكل', value: 'name' },
+        { text: 'الهاتف', value: 'phone' },
+        { text: 'العنوان', value: 'address' },
+        { text: 'الايميل', value: 'email' },
+        { text: '', value: '' },
+      ]
    };
   },
   components: {},
 
   methods: {
     async getClients() {
-      const res = await this.callApi('get',serverName);
-      this.clients = res.data;
+      const res = await this.api('clients');
+      this.clients=res.data;
     },
     async addClient() {
       const client={
@@ -251,7 +243,7 @@ export default {
         email: this.$refs.email.value,
         phone: this.$refs.phone.value,
       }
-      await this.callApi('post',serverName,client).then((res) => 
+      await this.api('clients','post',client).then((res) => 
       {
           this.getClients();
           this.$refs.closeModal.click();
@@ -264,18 +256,15 @@ export default {
     async deleteClient(id) {
       console.log(id);
       if (confirm("تأكيد الحذف؟")) {
-        await axios({
-          method:'delete',
-          url:serverName + "/" + id,
-          headers:request_header
-        }).then((response)=>{
+        await this.api('clients/'+id, 'delete').then((response)=>{
           this.handleResponse(response,"تم الحذف بنجاح !")
         });
         this.getClients();
       }
     },
-    showData(index) {
-      const client = this.clients[index];
+    showData(id) {
+      let client = this.clients.filter((client)=>client.id==id)[0];
+      
       this.$refs.ref_client.value = client.id;
       this.$refs.numberEdit.value = client.number;
       this.$refs.nameEdit.value = client.name;
@@ -293,12 +282,7 @@ export default {
       }
 
       const id = this.$refs.ref_client.value;
-      await axios({
-        method:'put',
-        url:serverName+"/"+id,
-        data:data,
-        headers:request_header
-      }).then(response=>{
+      await this.api("clients/"+id, 'put', data).then(response=>{
         this.handleResponse(response,"تم التعديل بنجاح !")
       });
 

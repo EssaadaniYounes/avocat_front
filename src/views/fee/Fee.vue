@@ -1,5 +1,6 @@
 <template>
 <div>
+
     <header class="row content-header ">
         <div class="col-6 content-title">
             <i class="fas fa-search-dollar"></i>
@@ -33,7 +34,7 @@
           </div>
          </div>
       </div>
-      <div style="margin-top:20px">
+      <div style="margin-top:20px" class="row">
         <div class="card text-dark mb-3 text-end">
             <div class="card-header">الاتعاب</div>
              <div class="card-body">
@@ -123,28 +124,23 @@
                 <label class="">المحضر :<span class="text-danger bold">FPV</span></label>
                 <input type="number" @keyup="calcExpenses" v-model="record_id" class="form-control col-8 currency">
               </div>
-              <div class="mb-3">
-                <label class="">التسجيل :</label>
-                <input type="number" @keyup="calcExpenses" v-model="record" class="form-control col-8 currency">
-              </div>
+
               <div class="mb-3">
                 <label class="">الخبرة : <span class="text-danger bold">Expertise</span></label>
                 <input type="number" @keyup="calcExpenses"  v-model="experience" class="form-control col-8 currency">
               </div>
+
               <div class="mb-3">
                 <label class="">التنقل :</label>
                 <input type="number" @keyup="calcExpenses"  v-model="transport" class="form-control col-8 currency">
               </div>
+
               <div class="mb-3">
-                <label class="">العون :</label>
-                <input type="number" @keyup="calcExpenses"  v-model="help" class="form-control col-8 currency">
+                  <label class="">التنفيد :</label>
+                  <input type="number" @keyup="calcExpenses"  v-model="execution" class="form-control col-8 currency">
               </div>
             </div>
             <div class="col-md-3">
-                <div class="mb-3">
-                    <label class="">التنفيد :</label>
-                    <input type="number" @keyup="calcExpenses"  v-model="execution" class="form-control col-8 currency">
-                </div>
                 <div class="mb-3">
                   <label class="">مصاريف و رسوم قضائية : <span class="text-danger bold">TFj</span></label>
                   <input type="number" @keyup="calcExpenses"  v-model="outlay" class="form-control col-8 currency">
@@ -175,22 +171,77 @@
                 <label class="">الباقي :</label>
                 <input type="number" v-model="rest_" class="form-control col-8 currency" readonly>
               </div>
+              <div class="mb-3">
+                <label class="">تاريخ الاداء :</label>
+                <input type="date" v-model="payment_date" class="form-control col-8 currency">
+              </div>
             </div>
             <div class="col-md-3 text-end">
-                <div class="mb-3">
-                  <label class="">تاريخ الاداء :</label>
-                  <input type="date" v-model="payment_date" class="form-control col-8 currency">
-                </div>
                 <div>
                     <label>ملاحظات :</label>
                     <textarea v-model="notes" cols="39" class="form-control" rows="10"></textarea>
                 </div>
             </div>
-            <div class="col-lg-12 text-center">
-              <hr>
-                <button class="btn btn-primary btn-lg"> <i class="fas fa-save"></i> حفظ</button>
-            </div>
           </div>
+        </div>
+        <div class="card text-dark mb-3 text-end">
+            <div class="card-header">الخبرات</div>
+            <div class="card-body row">
+                <div class="col-4 md-3">
+                  <label> الخبرات :</label>
+                  <table class="table-striped table">
+                    
+                  </table>
+                </div>
+                <div class="table-responsive sub-folders-table col-8">
+                  <table class="table table-striped ">
+                  <thead >
+                      <tr>
+                        <th >
+                            الرقم
+                        </th>
+                        <th>
+                            الخبرة
+                        </th>
+                        <th>
+                            تاريخها
+                        </th>
+                        
+                        <th>
+                          المبلغ
+                        </th>
+                        <th>
+                          المسبق
+                        </th>
+                        <th>
+                          الباقي
+                        </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for="experience in experiences" :key="experience.id">
+                          <td>{{ experience.experience_id }}</td>
+                          <td>{{ experience.experience_name }}</td>
+                          <td>{{ experience.experience_date }}</td>
+                          <td >
+                            <input type="number" class="form-control" >
+                          </td>
+                          <td>
+                            <input type="number" class="form-control">
+                          </td>
+                          <td>
+                            <input type="number" class="form-control">
+                          </td>
+                      </tr>
+                  </tbody>
+                  </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-12 text-center">
+          <hr>
+            <button class="btn btn-primary btn-lg"> <i class="fas fa-save"></i> حفظ</button>
         </div>
       </div>
     </div>
@@ -260,19 +311,15 @@
 </template>
 
 <script>
-import axios from 'axios';
-const feeSer = 'http://localhost:8000/api/fees';
-
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
+import api from '../../mixin';
 
 export default {
+    mixins:[api],
     props:['id'],
     data(){
       return{
+        experiences:[],
+        fee_experiences:[],
         folder_id:this.id,
         files:[],
         search_file:'',
@@ -349,12 +396,7 @@ export default {
       },
       async getFee()
       {
-        const res=await axios({
-          method:'post',
-          url:feeSer+"/search",
-          data:{id:this.id},
-          headers:request_header
-        });
+        const res=await this.api('fees/'+this.id);
         let _fee=res.data;
         this.fee_agreed_1=_fee.fee_agreed_1,
         this.fee_add_1=_fee.fee_add_1,
@@ -388,8 +430,12 @@ export default {
         this.notes=_fee.notes
       },
       async getFilesRef(){
-        const res=await axios({method:'get',url:'http://localhost:8000/api/folders',headers:request_header});
+        const res=await this.api('folders');
         this.files=res.data;
+        this.files.forEach(file => {
+          file.id==this.id?this.experiences=JSON.parse(file.experiences):'';
+        });
+          console.log(this.experiences);
         
       },
       async postFee(){
@@ -430,7 +476,7 @@ export default {
         payment_date:this.payment_date,
         expenses:this.expenses,
         notes:this.notes}
-        await axios({method:'post',data:Obj,url:feeSer,headers:request_header})
+        await this.api('fees','post',Obj)
         .then((res)=>
         {
           if(res.status==200){
@@ -440,7 +486,7 @@ export default {
         );
       },
       async getFees(){
-        const res=await axios.get(feeSer)
+        const res=await this.api('fees');
         this.fees=res.data;
         console.log(this.fees)
       },

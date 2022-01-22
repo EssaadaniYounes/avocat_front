@@ -92,7 +92,7 @@ table button,table a{
     height: 30px !important;
 }
 select.form-control{
-    height: 32px !important;
+    height: 35px !important;
 }
 .form-control:focus{
     box-shadow: none;
@@ -196,7 +196,7 @@ span.loader::before{
     font-weight: bold;
 }
 .row textarea{
-    height: 150px;
+    min-height: 110px !important;
 
 }
 .currency{
@@ -288,4 +288,29 @@ span.text-success,span.text-danger{
     font-weight: 600;
     font-size: 15px;
    padding: 0 15px ;
+}
+
+.v-icon.notranslate.mdi.mdi-chevron-right.theme--light{
+    position: relative;
+}
+.v-icon.notranslate.mdi.mdi-chevron-right.theme--light::before,.v-icon.notranslate.mdi.mdi-chevron-left.theme--light::before{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    content: '';
+    background-color: transparent;
+    border: 6px solid transparent;
+    border-left-color: black;
+}
+.v-icon.notranslate.mdi.mdi-chevron-left.theme--light::before{
+    border-right-color: black;
+    border-left-color: transparent;
+}
+.v-icon.notranslate.mdi.mdi-chevron-right.theme--light::after,.v-icon.notranslate.mdi.mdi-chevron-left.theme--light::after{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    content: '';
+    background-color: #666;
+    border-radius: 50%;
 }

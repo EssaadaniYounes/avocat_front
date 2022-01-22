@@ -222,16 +222,10 @@
 </template>
 
 <script>
-const users_server="http://localhost:8000/api/users";
-const register_server="http://localhost:8000/api/register";
-import axios from 'axios';
-import Vue from 'vue';
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
+
+import api from '../../mixin';
 export default {
+  mixins:[api],
   data(){
     return{
       dialog: false,
@@ -246,13 +240,8 @@ export default {
   },
   methods:{
     async getClientsList(){
-      await axios({
-        method:'get',
-        url:users_server,
-        headers:request_header
-      })
+      await this.api('users')
       .then((res)=>{
-        console.log(res.data);
         this.users=res.data;
       })
     },
@@ -264,12 +253,7 @@ export default {
         role_id:this.$refs.role_id.value,
         phone:this.$refs.phone.value,
       };
-      await axios({
-        method:'post',
-        url:register_server,
-        data:user,
-        headers:request_header
-      })
+      await this.api('register','post',user)
       .then(()=>{
         this.getClientsList();
         this.$refs.closeModal.click();
@@ -283,6 +267,7 @@ export default {
       this.role_id=this.users[index].role_id;
       this.phone=this.users[index].phone;
     },
+    //Not Yet
     async editUser(){
       const user={
         name:this.name,
@@ -291,12 +276,7 @@ export default {
         role_id:this.role_id,
         phone:this.phone,
       };
-      await axios({
-        method:'put',
-        url:users_server,
-        data:user,
-        headers:request_header
-      })
+      await axios('')
       .then(()=>{
         this.getClientsList();
         this.$refs.closeEditModal.click();
@@ -304,11 +284,7 @@ export default {
     },
     async deleteUser(id){
       if(confirm("تأكيد حذف هذا المستخدم")){
-      await axios({
-        method:'delete',
-        url:users_server+"/"+id,
-        headers:request_header
-      })
+      await this.api('users/'+id,'delete')
       .then(()=>{
         this.getClientsList()
       })};

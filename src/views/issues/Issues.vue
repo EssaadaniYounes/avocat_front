@@ -27,7 +27,7 @@
       :search="search"
     >
      <template v-slot:item="row">
-          <tr>
+          <tr v-if="row.item.id!=1">
             <td> {{row.item.type}}</td>
             <td>
                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#issueModalEdit" @click="showData(row.item.id-1)"><i class="fas fa-edit"></i></button>
@@ -89,14 +89,11 @@
 </template>
 
 <script>
-const issues_server='http://localhost:8000/api/issues';
-import axios from 'axios';
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
+
+import api from '../../mixin';
+
 export default {
+  mixins:[api],
   data(){
     return{
       search:'',
@@ -109,21 +106,13 @@ export default {
   },
   methods:{
     async getIssuesList(){
-      const res = await axios({
-          method:'get',
-          url:issues_server,
-          headers:request_header
-      });
+      const res = await this.api('issues');
 
       this.issues=res.data;
+
     },
     async addIssue(){
-      await axios({
-          method:'post',
-          url:issues_server,
-          data:{type: this.$refs.type.value},
-          headers:request_header
-      }).then((response)=>{
+      await this.api('issues','post',{type: this.$refs.type.value}).then((response)=>{
           this.handleResponse(response,"تمت الإضافة بنجاح!")
         });
 
@@ -133,11 +122,7 @@ export default {
     async deleteIssue(id){
         if(confirm("تأكيد الحذف؟"))
         {
-          await axios({
-            method:'delete',
-            url:issues_server+"/"+id,
-            headers:request_header
-          }).then((response)=>{
+          await this.api('issues/'+id,'delete').then((response)=>{
           this.handleResponse(response,"تم الحذف بنجاح !")
         });
 
@@ -152,12 +137,7 @@ export default {
     },
     async updateIssue(){
       const id=this.$refs.issue_id.value;
-      await axios({
-          method:'put',
-          url:issues_server+"/"+id,
-          data:{type: this.$refs.type_edited.value},
-          headers:request_header
-        }).then(response=>{
+      await this.api('issues/'+id,'put',{type: this.$refs.type_edited.value}).then(response=>{
         this.handleResponse(response,"تم التعديل بنجاح !")
       });
       this.getIssuesList();

@@ -77,15 +77,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-const serverName="http://127.0.0.1:8000/api/folders";//php
-const deepSearchUrl="http://127.0.0.1:8000/api/folders/search";//php
 
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
 import api from '../../mixin';
 
 export default {

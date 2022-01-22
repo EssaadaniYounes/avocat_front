@@ -27,7 +27,7 @@
       :search="search"
     >
      <template v-slot:item="row">
-          <tr>
+          <tr v-if="row.item.id!=1">
             <td> {{row.item.name}}</td>
             <td v-if="row.item.level=='1'">إبتدائية</td>
             <td v-if="row.item.level=='2'">إستئناف</td>
@@ -128,14 +128,9 @@
 </template>
 
 <script>
-const courts='http://localhost:8000/api/courts';
-import axios from 'axios';
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
+import api from '../../mixin';
 export default {
+  mixins:[api],
   data(){
     return{
       search:'',
@@ -149,11 +144,8 @@ export default {
   },
   methods:{
     async getCourtsList(){
-      const res = await axios(
-      {method:'get',
-      url:courts,
-      headers:request_header
-      });
+      const res = await this.api('courts');
+
       this.courts_list=res.data;
     },
     async addCourt(){
@@ -161,12 +153,7 @@ export default {
           name: this.$refs.court_name.value,
           level:this.$refs.court_level.value
         }
-        await axios({
-          method:'post',
-          url:courts,
-          data:Obj,
-          headers:request_header
-        }).then((response)=>{
+        await this.api('courts','post',Obj).then((response)=>{
           this.handleResponse(response,"تمت الإضافة بنجاح!")
         });
         this.getCourtsList();
@@ -175,11 +162,7 @@ export default {
     async deleteCourt(id){
         if(confirm("تأكيد الحذف؟"))
         {
-          await axios({
-            method:'delete',
-            url:courts+"/"+id,
-            headers:request_header
-          }).then((response)=>{
+          await this.api('courts/'+id,'delete').then((response)=>{
           this.handleResponse(response,"تم الحذف بنجاح !")
         });
           this.getCourtsList();
@@ -196,18 +179,13 @@ export default {
       const Obj={
           name: this.$refs.court_name_edited.value,
           level:this.$refs.court_level_edited.value,
-        }
+      }
       const id=this.$refs.court_id.value;
-        await axios({
-          method:'put',
-          url:courts+"/"+id,
-          data:Obj,
-          headers:request_header
-        }).then(response=>{
-        this.handleResponse(response,"تم التعديل بنجاح !")
-        });
-        this.getCourtsList();
-        this.$refs.closeEditModalCourt.click();
+      await this.api("courts/"+id, 'put', Obj).then(response=>{
+      this.handleResponse(response,"تم التعديل بنجاح !")
+      });
+      this.getCourtsList();
+      this.$refs.closeEditModalCourt.click();
     },
     handleResponse(response,message){
         if(response.status==200){

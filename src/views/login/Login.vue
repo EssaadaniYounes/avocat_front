@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import axios from "axios";
 
-const serverName = "http://localhost:8000/api/login";
+import api from '../../mixin';
 
 export default {
+  mixins:[api],
   data() {
     return {
       user:{
@@ -52,11 +52,7 @@ export default {
     async logIn() {
       // validation
       if (this.user.email && this.user.password) {
-        await axios({
-          method:'post',
-          url:'http://127.0.0.1:8000/api/login',
-          data:this.user
-        })
+        await this.api('login','post',this.user)
         .then((res)=>{
           if(res.status==200){
             this.$notify.success("تم تسجيل الدخول بنجاح!!");

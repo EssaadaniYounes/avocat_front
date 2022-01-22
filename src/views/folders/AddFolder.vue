@@ -185,6 +185,48 @@
         </div>
         </div>
         <div class="col-sm-12 col-md-4">
+           <div class="card text-dark mb-3 ">
+              <div class="card-header">
+                <span>الخبرات </span> 
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#modalAddExperience"
+                    class="btn btn-success btn-sm justify-content-end"><i class="fas fa-plus"></i> إضافة خبرة</button>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive sub-folders-table">
+                    <table class="table table-striped ">
+                    <thead >
+                        <tr>
+                          <th >
+                              الرقم
+                          </th>
+                          <th>
+                              الخبرة
+                          </th>
+                          <th>
+                              تاريخها
+                          </th>
+                          
+                          <th style="min-width:100px">
+                          </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                        <tr v-for="(experience,index) in experiences " :key="index">
+                            <td >{{ experience.experience_id }}</td>
+                            <td >{{ experience.experience_name }}</td>
+                            <td >{{ experience.experience_date }}</td>
+                            <td>
+                              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalUpdateExperience" @click="showExperienceDetails(index)"><i class="fas fa-edit"></i></button>
+                              <button class="btn btn-danger btn-sm" @click="deleteExperience(index)"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                
+              </div>
+          </div>
           <div class="card text-dark  mb-3 text-start" >
             <div class="card-header">الملفات</div>
             <div class="card-body">
@@ -221,14 +263,14 @@
           <div class="mb-3">
                 <label>ملاحظات:</label>
                 <textarea  v-model="notes" class="form-control" style="min-height:150px"></textarea>
-              </div>
+          </div>
         </div>
    
     <!-- save -->
         <div class="col-lg-12 text-center">
           <hr>
           <button @click="updateData" v-if="id" class="btn btn-warning btn-lg"><i class="fas fa-save"></i> حفظ الملف</button>
-            <button @click="postData" v-else class="btn btn-primary btn-lg"> <i class="fas fa-save"></i> حفظ الملف</button>
+          <button @click="postData" v-else class="btn btn-primary btn-lg"> <i class="fas fa-save"></i> حفظ الملف</button>
         </div>
     
     </div>
@@ -336,6 +378,63 @@
       </div>
     </div>
     </div>
+  <!--experience Modal Add -->
+    <div class="modal fade" id="modalAddExperience" tabindex="-1" aria-labelledby="modalAddExperienceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="closeExperienceModal"></button>
+          <h5 class="modal-title" id="modalAddExperienceLabel">إضافة خبرة</h5>
+        </div>
+        <div class="modal-body text-start">
+            <div class="mb-3">
+              <label>رقم الخبرة :</label>
+              <input type="text" id="experience_id" ref="experience_id" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label>الخبرة :</label>
+            <input type="text" id="experience_name" ref="experience_name" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>تاريخ الخبرة :</label>
+              <input type="date" id="experience_date" class="form-control" ref="experience_date">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="saveFile"  @click="addDataToExperiences">حفظ الخبرة</button>
+        </div>
+      </div>
+    </div>
+    </div>
+      <!--experience Modal Update -->
+    <div class="modal fade" id="modalUpdateExperience" tabindex="-1" aria-labelledby="modalEditExperienceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="closeModalExperienceEdit"></button>
+          <h5 class="modal-title" id="modalEditExperienceLabel"> تعديل خبرة</h5>
+        </div>
+        <div class="modal-body text-start">
+            <input type="hidden" ref="experience_index">
+            <div class="mb-3">
+              <label>رقم الخبرة :</label>
+              <input type="text" id="experience_id" ref="experience_id_edited" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label> الخبرة:</label>
+              <input type="text" id="experience_name" ref="experience_name_edited" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>تاريخ الخبرة :</label>
+              <input type="date" id="experience_date" class="form-control" ref="experience_date_edited">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" id="saveFile"  @click="updateExperience">حفظ التعديل</button>
+        </div>
+      </div>
+    </div>
+    </div>
 <!-- Clients list Modal -->
     <div class="modal fade" id="modalClient"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelAdd" aria-hidden="true">
       <div class="modal-dialog modal-content modal-lg">
@@ -361,7 +460,7 @@
               :search="search_client"
             >
               <template v-slot:item="row">
-                      <tr>
+                      <tr v-if="row.item.id!=1">
                         <td>
                             <button class="btn btn-success btn-sm" @click="setClient(row.item.id)"><i class="fas fa-check"></i></button>
                         </td>
@@ -435,7 +534,7 @@
               :search="search_issue"
             >
               <template v-slot:item="row">
-                      <tr>
+                      <tr v-if="row.item.id!=1">
                         <td>
                             <button class="btn btn-success btn-sm" @click="setIssue(row.item.id)"><i class="fas fa-check"></i></button>
                         </td>
@@ -494,7 +593,7 @@
                 :search="search_court"
               >
                 <template v-slot:item="row">
-                        <tr>
+                        <tr v-if="row.item.id!=1">
                           <td>
                               <button class="btn btn-success btn-sm" @click="setIssue(row.item.id)"><i class="fas fa-check"></i></button>
                           </td>
@@ -543,22 +642,15 @@
 
 <script>
 
-// require('vue-flash-message/dist/vue-flash-message.min.css'); 
-import axios from 'axios'
-const domainName ="http://localhost:8000/api/";
-//const users_server="http://localhost:3000/users";
+import api from '../../mixin';
 
-const request_header=
-{
-  'Accept':'application/json',
-  'Authorization':'Bearer '+localStorage.getItem('user_token')
-}
 export default {
+  mixins:[api],
   props: ['id'],
   data() {
     return {
       //items id
-      client_id:'',
+      client_id:'1',
       client_headers: [
           { text: '', value: '' },
           { text: 'رقم الموكل', value: 'number' },
@@ -566,8 +658,7 @@ export default {
           { text: 'الهاتف', value: 'phone' },
       ],
       search_client:'',
-      issue_type_id:'',
-      court_id:'',
+      court_id:'1',
       //searchs querys
       search_issue:'',
       issue_headers:[
@@ -599,7 +690,7 @@ export default {
       judgment_date: '',
       degree: '',
       decider: '',
-      issue_type_id: '',
+      issue_type_id: '1',
       assurance_number: '',
       pv_number: '',
       accident_date: '',
@@ -616,64 +707,11 @@ export default {
         { text: 'المرجع الخاص', value: 'private_id'},
         { text: 'اسم الموكل', value: 'client_name'},
       ],
-
+      experiences:[]
     };
   },
   methods: {
-    ask(url){
-      return domainName + url
-    },
-    async getSideFolders() {
-      const res = await axios(
-        {method:'get',
-        url:this.ask('folders'),
-        headers:request_header
-        });
-      this.side_folders = res.data;
-    },
-    addCredit() {
-      this.credits = [...this.credits, {}];
-    },
-    async postData() {
-
-      try {
-        
-        let Obj={
-              private_id: this.private_id,
-              date_open_file: this.date_open_file,
-              client_id: this.client_id,
-              client_ref: this.client_ref,
-              opponent_name: this.opponent_name,
-              issue_type_id:this.issue_type_id,
-              sub_files: JSON.stringify(this.sub_files),
-              assurance_number: this.assurance_number,
-              pv_number: this.pv_number,
-              accident_date: this.accident_date,
-              insured_name: this.insured_name,
-              expert_name: this.expert_name,
-              court_id: this.court_id,
-              court_ref: this.court_ref,
-              session_date: this.session_date,
-              room_number: this.room_number,
-              close_date: this.close_date,
-              status: this.status,
-              notes: this.notes
-            }
-
-        await axios({
-          method:'post',
-          url:this.ask('folders'),
-          data:Obj,
-          headers:request_header
-        }).then((response)=>{
-          this.handleResponse(response,"تمت إضافة الملف بنجاح!");
-          this.$router.push({name:'Folders'});
-        });
-        
-      } catch (err) {
-        this.handleResponse(err.response,"تمت إضافة الملف بنجاح!");
-      }
-    },
+    //sub_files
     addDataToFiles() {
       const file = {
         file_id: this.$refs.file_id.value,
@@ -702,15 +740,115 @@ export default {
       this.$refs.closeModalFileEdit.click()
 
     },
+    showFileDetails(index) {
+      const file = this.sub_files[index];
+      
+      this.$refs.file_index.value = index;
+      this.$refs.file_id_edited.value = file.file_id;
+      this.$refs.client_id_edited.value = file.client_id;
+      this.$refs.judgment_date_edited.value = file.judgment_date;
+      this.$refs.degree_edited.value = file.degree;
+      this.$refs.decider_edited.value = file.decider;
+      this.$refs.issue_type_id_edited.value = file.issue_type_id;
+    },
+    deleteFile(index) {
+      if(confirm("تأكيد الحذف!"))
+      {
+        this.sub_files =this.sub_files.filter((file,sub_file_index)=>{
+          return sub_file_index!=index
+        });
+        this.$notify.info("تم الحذف مؤقتا");
+      }
+    },
+    //Experiences
+    addDataToExperiences() {
+      const experience = {
+        experience_id : this.$refs.experience_id.value,
+        experience_name : this.$refs.experience_name.value,
+        experience_date : this.$refs.experience_date.value,
+      };
+      this.experiences = [...this.experiences, experience];
+      
+      this.$refs.closeExperienceModal.click()
+
+    },
+    updateExperience() {
+      const index=this.$refs.experience_index.value;
+      const experience = {
+        experience_id : this.$refs.experience_id.value,
+        experience_name : this.$refs.experience_name.value,
+        experience_date : this.$refs.experience_date.value,
+      };
+      
+      this.experiences[index]=experience;
+      this.$refs.closeModalExperienceEdit.click()
+
+    },
+    showExperienceDetails(index) {
+      const experience = this.experiences[index];
+      console.log(experience);
+      this.$refs.experience_index.value = index;
+      this.$refs.experience_id_edited.value = experience.experience_id;
+      this.$refs.experience_name_edited.value = experience.experience_name;
+      this.$refs.experience_date_edited.value = experience.experience_date;
+    },
+    deleteExperience(index) {
+      if(confirm("تأكيد الحذف!"))
+      {
+        this.experiences =this.experiences.filter((experience,experience_index)=>{
+          return experience_index!=index
+        });
+        this.$notify.info("تم الحذف مؤقتا");
+      }
+    },
+    //folders
+    async getSideFolders() {
+      const res = await this.api('folders');
+      this.side_folders = res.data;
+    },
+    async postData() {
+
+      try {
+        
+        let Obj={
+              private_id: this.private_id,
+              date_open_file: this.date_open_file,
+              client_id: this.client_id,
+              client_ref: this.client_ref,
+              opponent_name: this.opponent_name,
+              issue_type_id:this.issue_type_id,
+              sub_files: JSON.stringify(this.sub_files),
+              experiences: JSON.stringify(this.experiences),
+              assurance_number: this.assurance_number,
+              pv_number: this.pv_number,
+              accident_date: this.accident_date,
+              insured_name: this.insured_name,
+              expert_name: this.expert_name,
+              court_id: this.court_id,
+              court_ref: this.court_ref,
+              session_date: this.session_date,
+              room_number: this.room_number,
+              close_date: this.close_date,
+              status: this.status,
+              notes: this.notes
+            }
+
+        await this.api('folders','post',Obj).then((response)=>{
+          this.handleResponse(response,"تمت إضافة الملف بنجاح!");
+          this.$router.push({name:'Folders'});
+        });
+        
+      } catch (err) {
+        this.handleResponse(err.response,"تمت إضافة الملف بنجاح!");
+      }
+    },
     async getFolderById(folder_id){
-      const res =  await axios({
-        method:'get',
-        url:this.ask("folders/"+ folder_id),
-        headers:request_header
-      });
+      const res = await this.api('folders/'+ folder_id);
+
       this.folders = res.data;
       this.sub_files = JSON.parse(this.folders.sub_files);
-      console.log(this.sub_files);
+      this.experiences = JSON.parse(this.folders.experiences);
+
       this.putDataInForm(this.folders);
     },
     putDataInForm(data){
@@ -742,6 +880,7 @@ export default {
               opponent_name: this.opponent_name,
               issue_type_id:this.issue_type_id,
               sub_files: JSON.stringify(this.sub_files),
+              experiences: JSON.stringify(this.experiences),
               assurance_number: this.assurance_number,
               pv_number: this.pv_number,
               accident_date: this.accident_date,
@@ -756,12 +895,7 @@ export default {
               notes: this.notes
             }
       try {
-        await axios({
-          method:'put',
-          url:this.ask("folders/"+ this.id),
-          data:Obj,
-          headers:request_header
-        })
+        await this.api('folders/'+ this.id,'put',Obj)
         .then((res) => {
           this.handleResponse(res,"تم التعديل بنجاح!")
           this.$router.push({name: 'Folders'});
@@ -770,31 +904,9 @@ export default {
         console.log(err.message);
       }
     },
-    showFileDetails(index) {
-      const file = this.sub_files[index];
-      
-      this.$refs.file_index.value = index;
-      this.$refs.file_id_edited.value = file.file_id;
-      this.$refs.client_id_edited.value = file.client_id;
-      this.$refs.judgment_date_edited.value = file.judgment_date;
-      this.$refs.degree_edited.value = file.degree;
-      this.$refs.decider_edited.value = file.decider;
-      this.$refs.issue_type_id_edited.value = file.issue_type_id;
-    },
-    deleteFile(index) {
-      if(confirm("تأكيد الحذف!"))
-      {
-        this.sub_files =this.sub_files.filter((file,sub_file_index)=>{
-          return sub_file_index!=index
-        });
-        this.$notify.info("تم الحذف مؤقتا");
-      }
-    },
     //clients
     async getClientsList() {
-      const res = await axios({method:'get'
-      ,url:this.ask('clients')
-      ,headers:request_header});
+      const res = await this.api('clients');
       this.clientsList = res.data;
     },
     async addClient() {
@@ -805,12 +917,7 @@ export default {
             email: this.$refs.email.value,
             phone: this.$refs.phone.value
           }
-      await axios({
-        method:'post',
-        url:this.ask('clients'),
-        headers:request_header,
-        data:Obj
-      }).then((res)=>{
+      await this.api('clients','post',Obj).then((res)=>{
           this.handleResponse(res,"تمت إضافة موكل")
           this.getClientsList();
           this.client_id=res.data.id;
@@ -824,18 +931,12 @@ export default {
     },
     //Issues
     async getIssues() {
-      const res = await axios({method:'get'
-      ,url:this.ask('issues')
-      ,headers:request_header});;
+      const res = await this.api('issues');
       this.issuesList = res.data;
     },
     async addIssue() {
-      await axios({
-        method:'post',
-        url:this.ask('issues'),
-        data:{type: this.$refs.issue_type.value},
-        headers:request_header
-      }).then((res)=>{
+      await this.api('issues','post',{type: this.$refs.issue_type.value})
+      .then((res)=>{
           this.handleResponse(res,"تمت إضافة القضية")
           this.getIssues();
           this.issue_type_id=res.data.id;
@@ -849,9 +950,7 @@ export default {
     },
     //courts
     async getCourts() {
-      const res = await axios({method:'get'
-      ,url:this.ask('courts')
-      ,headers:request_header});
+      const res = await this.api('courts');
       this.courtsList = res.data;
     },
     async addCourt() {
@@ -859,12 +958,7 @@ export default {
         name: this.$refs.court_name.value,
         level: this.$refs.court_level.value,
       }
-      await axios({
-        method:'post',
-        url:this.ask('courts'),
-        data:Obj,
-        headers:request_header
-      }).then((res)=>{
+      await this.api('courts','post',Obj).then((res)=>{
           this.handleResponse(res,"تمت إضافة المحكمة")
           this.getCourts();
           this.court_id=res.data.id;
@@ -889,7 +983,7 @@ export default {
     }
   },
   mounted() {
-   
+   console.log(this.issue_type_id);
     this.getClientsList()
     this.getIssues()
     this.getCourts()
@@ -919,7 +1013,7 @@ export default {
       );
     },
     subFiles(){
-      return this.sub_files;
+      return this.sub_files.filter(file=>file);
     }
   }
 };
