@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <v-app>
+    <div class="row">
+      <div class="col-3"></div>
+        <v-app class="col-6">
               <div class="modal-body">
                  <div class="row justify-content-md-center">
                 <div class="mb-3">
@@ -22,11 +23,11 @@
                   <textarea class="form-control" v-model="product.description"></textarea>
                 </div>
                 <div class="mb-3">
-                  <label for="formFile" class="form-label">{{ $t('products.mainImage') }} :</label>
+                  <label class="form-label">{{ $t('products.mainImage') }} :</label>
                   <input class="form-control" type="file" ref="main_img" accept=".png, .jpg, .jpeg" @change="uploadFile($event,'single')">
                 </div>
                 <div class="mb-3">
-                  <label for="formFileMultiple" class="form-label">{{ $t('products.subImages') }} :</label>
+                  <label class="form-label">{{ $t('products.subImages') }} :</label>
                   <input class="form-control" type="file" ref="extra_imgs" accept=".png, .jpg, .jpeg" multiple @change="uploadFile($event,'multiple')">
                 </div>
                 <div class="mb-3">
@@ -111,9 +112,11 @@ export default {
   padding: 0 1.5rem;
   background-color: #dadbd9;
   border-radius: 8px;
+  font-weight: 700;
 }
 .functionalities{
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 1.5rem;
   padding-top: 1rem;
