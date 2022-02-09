@@ -2,13 +2,13 @@
   <div>
     <div class="card container" style="width: 18rem; margin-top: 100px">
       <div class="card-image">
-        <i class="fas fa-balance-scale w-25 p-3 h1"></i>
+        <i class="fas fa-shower w-25 p-3 h1"></i>
       </div>
       <div class="card-body">
-        <h5 class="card-title"><i class="fas fa-user"></i> تسجيل الدخول</h5>
+        <h5 class="card-title"><i class="fas fa-user"></i>  &nbsp; Login </h5>
         <hr />
-        <div class="mb-3 text-end">
-          <label class="justify-self-end">اسم المستعمل :</label>
+        <div class="mb-3 text-start">
+          <label class="justify-self-end">Email :</label>
           <input
             type="text"
             v-model="user.email"
@@ -17,8 +17,8 @@
             autofocus
           />
         </div>
-        <div class="mb-3 text-end">
-          <label class="justify-self-end">كلمة السر :</label>
+        <div class="mb-3 text-start">
+          <label class="justify-self-end">Password :</label>
           <input
             type="password"
             v-model="user.password"
@@ -27,7 +27,7 @@
           />
         </div>
         <button class="btn btn-primary btn-lg-12" @click="logIn()">
-          <i class="fas fa-sign-in-alt"></i> دخول
+          <i class="fas fa-sign-in-alt"></i> Login
         </button>
       </div>
     </div>
@@ -55,9 +55,11 @@ export default {
         await this.api('login','post',this.user)
         .then((res)=>{
           if(res.status==200){
+
             this.$notify.success("تم تسجيل الدخول بنجاح!!");
             localStorage.setItem("user_token",res.data.data.token);
-            this.$router.push({name:'AddFolder'});
+            localStorage.setItem("user",res.data.data.user.name);
+            this.$router.push({name:'Categories'})
           }
         });
       }

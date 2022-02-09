@@ -1,9 +1,6 @@
-import Folders from './folders/Folders.vue';
-import AddFolder from './folders/AddFolder.vue';
-import Courts from './courts/Courts.vue'
-import Clients from './clients/Clients.vue';
+import Branches from './admin/branches/Branches.vue';
+import Categories from './admin/category/Categories.vue';
+import Products from './admin/products/Products.vue';
+import AddProduct from './admin/products/AddProduct.vue';
 import Login from './login/Login.vue';
-import Fee from './fee/Fee.vue';
-import Users from './users/Users.vue';
-import Issues from './issues/Issues.vue'
-export default { Folders, AddFolder, Courts, Clients, Login, Fee, Users, Issues };
+export default { Login, Products, Categories, Branches, AddProduct };

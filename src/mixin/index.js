@@ -9,14 +9,14 @@ const domaine = "http://127.0.0.1:8000/api/";
 
 export default {
     methods: {
-        async api(request, method , data ) {
+        async api(url, method , data ) {
             
             data = !data ? {} : data;
             method = !method ? "get" : method;
 
             return await axios({
                 method: method,
-                url: domaine + request,
+                url: domaine + url,
                 data: data,
                 headers: request_header
             })

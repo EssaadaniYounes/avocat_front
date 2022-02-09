@@ -5,8 +5,14 @@ import vuetify from './plugins/vuetify'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Notify from 'vue2-notify'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+
+import VueI18n from 'vue-i18n'
+import i18n from './plugins/i18n';
 
 new Vue({
+  i18n,
   router,
   vuetify,
   render: h => h(App)
@@ -26,3 +32,7 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(Notify)
+Vue.use(iView);
+Vue.use(VueI18n);
+
+

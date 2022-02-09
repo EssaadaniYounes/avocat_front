@@ -11,43 +11,25 @@ const routes = [
     component: Views.Login
   },
   {
-    path: '/folders',
-    name: 'Folders',
-    component: Views.Folders
+    path: '/categories',
+    name: 'Categories',
+    component: Views.Categories
   },
   {
-    path: '/add-folder/:id?',
-    name: 'AddFolder',
-    component: Views.AddFolder,
-    props: true
+    path: '/products',
+    name: 'Products',
+    component: Views.Products
   },
   {
-    path: '/clients',
-    name: 'Clients',
-    component: Views.Clients
+    path: '/products/add-product',
+    name: 'AddProduct',
+    component: Views.AddProduct
   },
   {
-    path: '/courts',
-    name: 'Courts',
-    component: Views.Courts
+    path: '/branches',
+    name: 'Branches',
+    component: Views.Branches
   },
-  {
-    path: '/file/fee/:id?',
-    name: 'Fee',
-    component: Views.Fee,
-    props: true
-  },
-  {
-    path: '/users',
-    name: 'Users',
-    component: Views.Users
-  }
-  ,
-  {
-    path: '/issues',
-    name: 'Issues',
-    component: Views.Issues
-  }
 ]
 
 

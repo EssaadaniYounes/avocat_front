@@ -13,17 +13,8 @@ import Components from "./components";
 export default {
   components:{
     'links-header':Components.Header
-  },
-  data(){
-    return {
-      currentVue:''
-    }
-  },
-  computed:{
-    currentRouteName() {
-        return this.$route.name;
-    }
   }
+  
 }
 </script>
 <style>
@@ -39,10 +30,10 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #42b983 !important;
 }
 .v-application a{
-    color: white !important;
+    color: white ;
 }
 
 </style>

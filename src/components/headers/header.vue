@@ -3,71 +3,61 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <div class="navbar-brand logo">
-          <i class="fas fa-balance-scale h3"></i> &nbsp;
-          <b>مكتب المحاماة </b>
+          <i class="fas fa-shower h3"></i> &nbsp;
+          <b>Sanitary </b>
       </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-10 ">
-            <li class="nav-item">
-              <router-link class="nav-link active" :to="{name:'Folders'}" aria-current="page">
-                <span><i class="far fa-file" ></i>
-                الملفات </span>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{name:'Clients'}">
-              <span><i class="fas fa-user-tie"></i>
-              الموكلين</span>
-              </router-link>
-            </li>
-            <li class="nav-item" v-if="current_user.role_id=='1'">
-              <router-link class="nav-link" :to="{name:'Fee'}">
-              <span><i class="fas fa-search-dollar"></i>
-              الأتعاب</span>
-              </router-link>
-            </li>
-            <!-- <li class="nav-item">
-              <router-link class="nav-link" to="/">
-              <span>
-                <i class="fas fa-envelope-open-text"></i>
-              التقارير
-              </span>
-              </router-link>
-            </li> -->
-            <li class="nav-item" v-if="current_user.role_id=='1'">
-              <router-link class="nav-link" :to="{name:'Users'}">
-              <span>
-                <i class="far fa-user"></i>
-              المستخدمين
-              </span>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{name:'Courts'}">
-              <span>
-                <i class="fas fa-balance-scale"></i>
-                 المحاكم
-              </span>
-              </router-link>
-            </li> 
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{name:'Issues'}">
-              <span>
-                <i class="fas fa-balance-scale"></i>
-                 القضايا
-              </span>
-              </router-link>
-            </li> 
+              
+            <li class="nav-item dropdown">
+            
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <span>
+               <i class="fas fa-language"></i> 
+             </span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              
+              <li class="nav-item " @click="changeLocale('en')">
+                <span class="dropdown-item">en</span>
+              </li> 
+              <li class="nav-item " @click="changeLocale('ar')">
+                <span class="dropdown-item">ar</span>
+              </li> 
+              <li class="nav-item " @click="changeLocale('es')">
+                <span class="dropdown-item">es</span>
+              </li> 
           
+            </ul>
+            
+          </li>
+            <li class="nav-item">
+              <router-link class="nav-link active" :to="{name:'Categories'}" aria-current="page">
+                <span><i class="fas fa-stream" ></i>
+                {{ $t('main.categories') }} </span>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{name:'Products'}">
+              <span><i class="fas fa-sitemap"></i>
+               {{ $t('main.products') }}</span>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{name:'Branches'}">
+              <span><i class="fas fa-code-branch"></i>
+               {{ $t('main.branchs') }}</span>
+              </router-link>
+            </li>
           <li class="nav-item dropdown">
             
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <span>
                <i class="fas fa-user"></i> 
-                {{current_user.name}}
+                {{current_user}}
              </span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -75,11 +65,12 @@
               <li class="nav-item  text-end">
                 <router-link class="dropdown-item" to="/">
                   <i class="fas fa-sign-out-alt"></i> &nbsp;
-                  <span>خروج</span> 
+                  <span>Logout</span> 
                 </router-link>
               </li> 
           
             </ul>
+            
           </li>
       </ul>
     </div>
@@ -89,34 +80,38 @@
 </template>
 
 <script>
-import axios from 'axios';
-const users_server="http://localhost:3000/users";
+
+
 export default {
     data(){
       return{
-        current_user:{}
+        current_user:{'name':''}
       }
     },
     methods:{
-      async user(){
-        const res=await axios({
-          method:'get',
-          url:'http://127.0.0.1:8000/api/user-list',
-          headers:{
-            'Accept':'application/json',
-            'Authorization':'Bearer '+localStorage.getItem('user_token')
-          }
-          });
-        this.current_user=res.data.data;
+      changeLocale(language) {
+        this.$i18n.locale = language;
+        localStorage.setItem('lang',language);
+        if (language == 'ar') {
+            document.querySelector('html').classList.add('is-rtl')
+        }
+        else{
+          document.querySelector('html').classList.remove('is-rtl')
+        }
       }
     },
     mounted(){
-      this.user();
+      this.current_user = localStorage.getItem('user');
+      this.changeLocale(localStorage.getItem('lang'));
     }
 }
 </script>
 
 <style>
+
+li{
+  color: white !important;
+}
 .navbar{
   display: flex;
   justify-content: space-between;

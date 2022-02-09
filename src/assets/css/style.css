@@ -248,10 +248,7 @@ i{
 .v-input__control {
     border: 1px solid #333;
 }
-button[aria-label='Close']{
-    position: absolute;
-    left: 15px;
-}
+
 .modal-header button[data-bs-toggle="modal"]{
     position: absolute;
     left: 60px;
@@ -313,4 +310,14 @@ span.text-success,span.text-danger{
     content: '';
     background-color: #666;
     border-radius: 50%;
+}
+
+.experience-content{
+    background: #b6e1dd;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+html.is-rtl * {
+    direction: rtl;
 }
